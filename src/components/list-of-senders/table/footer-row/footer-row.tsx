@@ -61,9 +61,39 @@ export default class FooterRow extends React.Component<Props, State> {
 
   addButton = () => {
     console.log(this.state);
+
+    let errorOnForm = {
+      target: false,
+      date: false,
+      subject: false,
+    };
+    if (!this.state.target) {
+      errorOnForm.target = true;
+    }
+    if (!this.state.date) {
+      errorOnForm.date = true;
+    }
+    if (!this.state.subject) {
+      errorOnForm.subject = true;
+    }
+    if (errorOnForm.target || errorOnForm.date || errorOnForm.subject) {
+      this.setState({ errorOnForm: errorOnForm });
+      return;
+    }
     axios
       .post(api_url + "list-of-senders/add/", this.state)
       .then((e) => console.log(e));
+
+    this.setState({
+      target: "",
+      date: "",
+      subject: "",
+      errorOnForm: {
+        target: false,
+        date: false,
+        subject: false,
+      },
+    });
   };
 
   render() {
@@ -72,7 +102,11 @@ export default class FooterRow extends React.Component<Props, State> {
         <HeadersOfFrom></HeadersOfFrom>
         <tr>
           <td>
-            <select onChange={(e) => this.targetSelect(e)} required>
+            <select
+              onChange={(e) => this.targetSelect(e)}
+              value={this.state.target}
+              required
+            >
               <option defaultValue=""> </option>
               <option>{TargetEnum.telegram}</option>
               <option>{TargetEnum.email}</option>
@@ -84,7 +118,12 @@ export default class FooterRow extends React.Component<Props, State> {
             )}
           </td>
           <td>
-            <input type="date" onChange={(e) => this.dateChange(e)} required />
+            <input
+              type="date"
+              value={this.state.date}
+              onChange={(e) => this.dateChange(e)}
+              required
+            />
             {this.state.errorOnForm.date ? (
               <span style={{ color: "red" }}>Please Enter some value</span>
             ) : (
@@ -94,6 +133,7 @@ export default class FooterRow extends React.Component<Props, State> {
           <td>
             <input
               type="text"
+              value={this.state.subject}
               onChange={(e) => this.subjectChange(e)}
               required
             />
