@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ListOfSendersTable = (props: Props) => {
-  console.log(props);
   return (
     <table>
       <Header></Header>

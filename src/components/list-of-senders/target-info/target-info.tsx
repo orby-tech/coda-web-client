@@ -9,7 +9,6 @@ interface Props {
 }
 
 const TargetInfo = (props: Props) => {
-  console.log(props);
   if (props.target === TargetEnum.telegram) {
     return (
       <div className="target-block">

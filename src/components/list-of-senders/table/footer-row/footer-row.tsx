@@ -60,8 +60,6 @@ export default class FooterRow extends React.Component<Props, State> {
   };
 
   addButton = () => {
-    console.log(this.state);
-
     let errorOnForm = {
       target: false,
       date: false,
@@ -80,9 +78,7 @@ export default class FooterRow extends React.Component<Props, State> {
       this.setState({ errorOnForm: errorOnForm });
       return;
     }
-    axios
-      .post(api_url + "list-of-senders/add/", this.state)
-      .then((e) => console.log(e));
+    axios.post(api_url + "list-of-senders/add/", this.state);
 
     this.setState({
       target: "",

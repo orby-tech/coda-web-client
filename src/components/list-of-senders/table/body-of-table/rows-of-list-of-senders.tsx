@@ -11,7 +11,6 @@ const RowsOfListOfSenders = (props: Props) => {
   const deleteItem = (id: string) => {
     axios
       .post(api_url + "list-of-senders/delete/", { id: id })
-      .then((e) => console.log(e));
   };
   return (
     <tbody>
