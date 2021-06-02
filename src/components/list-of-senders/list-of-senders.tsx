@@ -1,8 +1,8 @@
-import axios from "axios";
-import React from "react";
-import { api_url } from "../../app-config";
-import { SenderType } from "./models";
-import ListOfSendersTable from "./table/table";
+import axios from 'axios';
+import React from 'react';
+import { apiUrl } from '../../app-config';
+import { SenderType } from './models';
+import ListOfSendersTable from './table/table';
 
 interface Props {}
 
@@ -17,18 +17,22 @@ class ListOfSenders extends React.Component<Props, State> {
       rows: [],
     };
   }
+
   componentDidMount() {
-    this.get_list_of_senders();
+    this.getListOfSenders();
   }
-  get_list_of_senders = () => {
+
+  getListOfSenders = () => {
     axios
-      .get(api_url + "list-of-senders/")
+      .get(`${apiUrl}list-of-senders/`)
       .then((res) => this.setState({ rows: res.data as SenderType[] }));
   };
+
   render = () => {
+    const { rows } = this.state;
     return (
       <div>
-        <ListOfSendersTable rows={this.state.rows}></ListOfSendersTable>
+        <ListOfSendersTable rows={rows} />
       </div>
     );
   };

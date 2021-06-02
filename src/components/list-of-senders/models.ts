@@ -5,7 +5,8 @@ export type SenderType = {
   last_send_date: string;
   subject: string;
 };
+
 export enum TargetEnum {
-  telegram = "telegram",
-  email = "email",
+  telegram = 'telegram',
+  email = 'email',
 }

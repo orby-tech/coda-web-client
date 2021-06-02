@@ -1,44 +1,47 @@
-import axios from "axios";
-import React from "react";
-import { api_url } from "../../../../app-config";
-import { TargetEnum } from "../../models";
+import axios from 'axios';
+import React from 'react';
+import { apiUrl } from '../../../../app-config';
+import { TargetEnum } from '../../models';
 
+interface ErrorOnForm {
+  target: boolean;
+  date: boolean;
+  subject: boolean;
+}
 interface Props {}
 
 interface State {
-  target: string;
-  date: string;
-  subject: string;
-  errorOnForm: {
-    target: boolean;
-    date: boolean;
-    subject: boolean;
+  formValues: {
+    target: string;
+    date: string;
+    subject: string;
   };
+  errorOnForm: ErrorOnForm;
 }
 
-const HeadersOfFrom = () => {
-  return (
-    <>
-      <tr>
-        <td>{/* <h3>You can add new sendler:</h3> */}</td>
-      </tr>
-      <tr>
-        <td>Target</td>
-        <td>Event date</td>
-        <td>Subject</td>
-        <td></td>
-      </tr>
-    </>
-  );
-};
+const HeadersOfForm = () => (
+  <>
+    <tr>
+      <td>{/* <h3>You can add new sendler:</h3> */}</td>
+    </tr>
+    <tr>
+      <td>Target</td>
+      <td>Event date</td>
+      <td>Subject</td>
+      <td />
+    </tr>
+  </>
+);
 
 export default class FooterRow extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      target: "",
-      date: "",
-      subject: "",
+      formValues: {
+        target: '',
+        date: '',
+        subject: '',
+      },
       errorOnForm: {
         target: false,
         date: false,
@@ -48,42 +51,63 @@ export default class FooterRow extends React.Component<Props, State> {
   }
 
   targetSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ target: e.target.value });
+    const { formValues } = this.state;
+    this.setState({
+      formValues: {
+        ...formValues,
+        target: e.target.value,
+      },
+    });
   };
 
   dateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ date: e.target.value });
+    const { formValues } = this.state;
+    this.setState({
+      formValues: {
+        ...formValues,
+        date: e.target.value,
+      },
+    });
   };
 
   subjectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ subject: e.target.value });
+    const { formValues } = this.state;
+
+    this.setState({
+      formValues: {
+        ...formValues,
+        subject: e.target.value,
+      },
+    });
   };
 
-  addButton = () => {
-    let errorOnForm = {
+  private checkFrom = (): ErrorOnForm => {
+    const errorOnForm = {
       target: false,
       date: false,
       subject: false,
     };
-    if (!this.state.target) {
+    const { formValues } = this.state;
+
+    if (!formValues.target) {
       errorOnForm.target = true;
     }
-    if (!this.state.date) {
+    if (!formValues.date) {
       errorOnForm.date = true;
     }
-    if (!this.state.subject) {
+    if (!formValues.subject) {
       errorOnForm.subject = true;
     }
-    if (errorOnForm.target || errorOnForm.date || errorOnForm.subject) {
-      this.setState({ errorOnForm: errorOnForm });
-      return;
-    }
-    axios.post(api_url + "list-of-senders/add/", this.state);
+    return errorOnForm;
+  };
 
+  private setDefaultValueOfState = (): void => {
     this.setState({
-      target: "",
-      date: "",
-      subject: "",
+      formValues: {
+        target: '',
+        date: '',
+        subject: '',
+      },
       errorOnForm: {
         target: false,
         date: false,
@@ -92,55 +116,76 @@ export default class FooterRow extends React.Component<Props, State> {
     });
   };
 
+  private sendNewItemValues = (): void => {
+    const { formValues } = this.state;
+
+    axios.post(`${apiUrl}list-of-senders/add/`, formValues);
+  };
+
+  addButton = () => {
+    const errorOnForm = this.checkFrom();
+
+    if (errorOnForm.target || errorOnForm.date || errorOnForm.subject) {
+      this.setState({ errorOnForm });
+      return;
+    }
+
+    this.sendNewItemValues();
+
+    this.setDefaultValueOfState();
+  };
+
   render() {
+    const { formValues, errorOnForm } = this.state;
+
     return (
       <tfoot>
-        <HeadersOfFrom></HeadersOfFrom>
+        <HeadersOfForm />
         <tr>
           <td>
             <select
               onChange={(e) => this.targetSelect(e)}
-              value={this.state.target}
+              value={formValues.target}
               required
             >
               <option defaultValue=""> </option>
               <option>{TargetEnum.telegram}</option>
               <option>{TargetEnum.email}</option>
             </select>
-            {this.state.errorOnForm.target ? (
-              <span style={{ color: "red" }}>Please Enter some value</span>
+            {errorOnForm.target ? (
+              <span style={{ color: 'red' }}>Please Enter some value</span>
             ) : (
-              ""
+              ''
             )}
           </td>
           <td>
             <input
               type="date"
-              value={this.state.date}
+              value={formValues.date}
               onChange={(e) => this.dateChange(e)}
               required
             />
-            {this.state.errorOnForm.date ? (
-              <span style={{ color: "red" }}>Please Enter some value</span>
+            {errorOnForm.date ? (
+              <span style={{ color: 'red' }}>Please Enter some value</span>
             ) : (
-              ""
+              ''
             )}
           </td>
           <td>
             <input
               type="text"
-              value={this.state.subject}
+              value={formValues.subject}
               onChange={(e) => this.subjectChange(e)}
               required
             />
-            {this.state.errorOnForm.subject ? (
-              <span style={{ color: "red" }}>Please Enter some value</span>
+            {errorOnForm.subject ? (
+              <span style={{ color: 'red' }}>Please Enter some value</span>
             ) : (
-              ""
+              ''
             )}
           </td>
           <td>
-            <button onClick={(e) => this.addButton()}> Add </button>
+            <button type="submit" onClick={() => this.addButton()}> Add </button>
           </td>
         </tr>
       </tfoot>
