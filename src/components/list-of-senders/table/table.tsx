@@ -41,7 +41,7 @@ const RowsOfListOfSenders = (props: Props) => {
             <td>{row.subject}</td>
             <td>{row.last_send_date}</td>
             <td>
-              <button onClick={() => deleteItem(row.id)}></button>
+              <button onClick={() => deleteItem(row.id)}>Delete</button>
             </td>
           </tr>
         );
