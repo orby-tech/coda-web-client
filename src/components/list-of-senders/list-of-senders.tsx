@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { apiUrl } from '../../app-config';
-import { SenderType } from './models';
+import { SenderType } from '../../models';
 import ListOfSendersTable from './table/table';
 
 interface Props {}

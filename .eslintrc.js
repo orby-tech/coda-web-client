@@ -9,7 +9,6 @@ module.exports = {
   },
   env: {
     browser: true,
-
     es2021: true,
   },
 
@@ -33,6 +32,7 @@ module.exports = {
     'import/extensions': ['error', 'always', { ts: 'never', tsx: 'never' }],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
+    'no-use-before-define': 'off',
     'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
   },
 };

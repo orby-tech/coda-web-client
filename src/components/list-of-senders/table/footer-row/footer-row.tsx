@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { apiUrl } from '../../../../app-config';
-import { TargetEnum } from '../../models';
+import { TargetEnum } from '../../../../models';
 
 interface ErrorOnForm {
   target: boolean;

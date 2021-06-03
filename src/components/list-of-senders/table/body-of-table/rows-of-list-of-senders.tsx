@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiUrl } from '../../../../app-config';
-import { SenderType, TargetEnum } from '../../models';
+import { SenderType, TargetEnum } from '../../../../models';
 import TargetInfo from '../../target-info/target-info';
 
 interface Props {
@@ -17,9 +17,9 @@ const RowsOfListOfSenders = ({ rows }: Props) => {
           <td>
             <TargetInfo target={row.target as TargetEnum} />
           </td>
-          <td>{row.count_of_days}</td>
+          <td>{row.countOfDays}</td>
           <td>{row.subject}</td>
-          <td>{row.last_send_date}</td>
+          <td>{row.lastSendDate}</td>
           <td>
             <button type="submit" onClick={() => deleteItem(row.id)}>Delete</button>
           </td>

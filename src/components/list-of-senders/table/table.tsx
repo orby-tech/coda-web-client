@@ -1,4 +1,4 @@
-import { SenderType } from '../models';
+import { SenderType } from '../../../models';
 import RowsOfListOfSenders from './body-of-table/rows-of-list-of-senders';
 import FooterRow from './footer-row/footer-row';
 import Header from './header/header';
