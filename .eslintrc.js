@@ -10,6 +10,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: { globals: true },
   },
 
   extends: ['plugin:react/recommended', 'airbnb'],
@@ -29,6 +30,9 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
 
   rules: {
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/no-unused-vars': 'error',
     'import/extensions': ['error', 'always', { ts: 'never', tsx: 'never' }],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
