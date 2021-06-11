@@ -31,7 +31,7 @@ class ListOfSenders extends React.Component<Props, State> {
   render = () => {
     const { rows } = this.state;
     return (
-      <div>
+      <div date-testid="list-of-senders-component">
         <ListOfSendersTable rows={rows} />
       </div>
     );

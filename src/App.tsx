@@ -4,7 +4,7 @@ import ListOfSenders from './components/list-of-senders/list-of-senders';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" data-testid="app-component">
       <ListOfSenders />
     </div>
   );
