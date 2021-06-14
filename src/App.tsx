@@ -1,13 +1,14 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-props-no-spreading */
+import { inject, observer } from 'mobx-react';
 import './App.css';
 
 import ListOfSenders from './components/list-of-senders/list-of-senders';
 
-function App() {
-  return (
-    <div className="App" data-testid="app-component">
-      <ListOfSenders />
-    </div>
-  );
-}
+const App = () => (
+  <div className="App" data-testid="app-component">
+    <ListOfSenders />
+  </div>
+);
 
-export default App;
+export default inject('mainStore')(observer(App));

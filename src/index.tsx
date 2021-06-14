@@ -1,13 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { Provider } from 'mobx-react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import stores from './stores/main-store';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+
+    <Provider {...stores}>
+      <App />
+    </Provider>
   </React.StrictMode>,
+
   document.getElementById('root'),
 );
 

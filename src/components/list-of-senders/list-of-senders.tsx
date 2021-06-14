@@ -1,56 +1,29 @@
-import axios from 'axios';
+import { inject, observer } from 'mobx-react';
 import React from 'react';
-import { apiUrl } from '../../app-config';
 import { SenderType } from '../../models';
+import { Stores } from '../../stores/main-store';
 import ListOfSendersTable from './table/table';
 
-interface Props {}
+interface Props extends Stores {}
 
-interface State {
-  rows: SenderType[];
-}
-
-class ListOfSenders extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      rows: [],
-    };
+const ListOfSenders = ({ mainStore }:Props) => {
+  if (!mainStore || (mainStore && !mainStore.rows.length)) {
+    return noDataComponent();
   }
 
-  componentDidMount() {
-    this.getListOfSenders();
-  }
+  return dataComponent(mainStore.rows);
+};
 
-  render = () => {
-    const { rows } = this.state;
-    if (!rows.length) {
-      return this.renderWithOutData();
-    }
+export default inject('mainStore')(observer(ListOfSenders));
 
-    return this.renderWithData();
-  };
+const dataComponent = (rows: SenderType[]) => (
+  <div date-testid="list-of-senders-component">
+    <ListOfSendersTable rows={rows} />
+  </div>
+);
 
-  private getListOfSenders = () => {
-    axios
-      .get(`${apiUrl}list-of-senders/`)
-      .then((res) => this.setState({ rows: res.data as SenderType[] }));
-  };
-
-  private renderWithData = () => {
-    const { rows } = this.state;
-    return (
-      <div date-testid="list-of-senders-component">
-        <ListOfSendersTable rows={rows} />
-      </div>
-    );
-  }
-
-  private renderWithOutData = () => (
-    <div date-testid="list-of-senders-not-found-error-component">
-      Oops. Not founded
-    </div>
-  );
-}
-
-export default ListOfSenders;
+const noDataComponent = () => (
+  <div date-testid="list-of-senders-not-found-error-component">
+    Oops. Not founded
+  </div>
+);

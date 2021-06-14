@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import { SenderType } from '../../../models';
 import RowsOfListOfSenders from './body-of-table/rows-of-list-of-senders';
 import FooterRow from './footer-row/footer-row';
@@ -16,4 +17,4 @@ const ListOfSendersTable = ({ rows }: Props) => (
   </table>
 );
 
-export default ListOfSendersTable;
+export default observer(ListOfSendersTable);
