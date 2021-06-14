@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { apiUrl } from '../../../../app-config';
-import { TargetEnum } from '../../../../models';
+import { targetEnum } from '../../../../models';
+import RowComponent from '../row/row';
 
 interface ErrorOnForm {
   target: boolean;
@@ -20,17 +21,12 @@ interface State {
 }
 
 const HeadersOfForm = () => (
-  <>
-    <tr>
-      <td>{/* <h3>You can add new sendler:</h3> */}</td>
-    </tr>
-    <tr>
-      <td>Target</td>
-      <td>Event date</td>
-      <td>Subject</td>
-      <td />
-    </tr>
-  </>
+  <RowComponent
+    target="Target"
+    countOfDays="Event date"
+    subject="Subject"
+    lastSendDate=""
+  />
 );
 
 export default class FooterRow extends React.Component<Props, State> {
@@ -135,60 +131,82 @@ export default class FooterRow extends React.Component<Props, State> {
     this.setDefaultValueOfState();
   };
 
-  render() {
+  targetEdit = () => {
+    const { formValues, errorOnForm } = this.state;
+    return (
+      <>
+        <select
+          onChange={(e) => this.targetSelect(e)}
+          value={formValues.target}
+          required
+        >
+          <option defaultValue=""> </option>
+          <option>{targetEnum.telegram.name}</option>
+          <option>{targetEnum.email.name}</option>
+        </select>
+        {errorOnForm.target ? (
+          <span style={{ color: 'red' }}>Please Enter some value</span>
+        ) : (
+          ''
+        )}
+      </>
+    );
+  }
+
+  eventDayEdit = () => {
     const { formValues, errorOnForm } = this.state;
 
     return (
-      <tfoot>
-        <HeadersOfForm />
-        <tr>
-          <td>
-            <select
-              onChange={(e) => this.targetSelect(e)}
-              value={formValues.target}
-              required
-            >
-              <option defaultValue=""> </option>
-              <option>{TargetEnum.telegram}</option>
-              <option>{TargetEnum.email}</option>
-            </select>
-            {errorOnForm.target ? (
-              <span style={{ color: 'red' }}>Please Enter some value</span>
-            ) : (
-              ''
-            )}
-          </td>
-          <td>
-            <input
-              type="date"
-              value={formValues.date}
-              onChange={(e) => this.dateChange(e)}
-              required
-            />
-            {errorOnForm.date ? (
-              <span style={{ color: 'red' }}>Please Enter some value</span>
-            ) : (
-              ''
-            )}
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formValues.subject}
-              onChange={(e) => this.subjectChange(e)}
-              required
-            />
-            {errorOnForm.subject ? (
-              <span style={{ color: 'red' }}>Please Enter some value</span>
-            ) : (
-              ''
-            )}
-          </td>
-          <td>
-            <button type="submit" onClick={() => this.addButton()}> Add </button>
-          </td>
-        </tr>
-      </tfoot>
+      <>
+        <input
+          type="date"
+          value={formValues.date}
+          onChange={(e) => this.dateChange(e)}
+          required
+        />
+        {errorOnForm.date ? (
+          <span style={{ color: 'red' }}>Please Enter some value</span>
+        ) : (
+          ''
+        )}
+      </>
     );
   }
+
+  subjectEdit = () => {
+    const { formValues, errorOnForm } = this.state;
+
+    return (
+      <>
+        <input
+          type="text"
+          value={formValues.subject}
+          onChange={(e) => this.subjectChange(e)}
+          required
+        />
+        {errorOnForm.subject ? (
+          <span style={{ color: 'red' }}>Please Enter some value</span>
+        ) : (
+          ''
+        )}
+      </>
+    );
+  }
+
+  submitEdit = () => (
+    <button type="submit" onClick={() => this.addButton()}> Add </button>
+  )
+
+  render = () => (
+    <tfoot>
+      <HeadersOfForm />
+      <RowComponent
+        target={this.targetEdit()}
+        countOfDays={this.eventDayEdit()}
+        subject={this.subjectEdit()}
+        lastSendDate=""
+        submit={this.submitEdit()}
+      />
+    </tfoot>
+  )
 }

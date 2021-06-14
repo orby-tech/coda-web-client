@@ -1,37 +1,23 @@
-import { TargetEnum } from '../../../models';
-import telegramIcon from '../../../icons/telegram.png';
-import emailIcon from '../../../icons/email.png';
-import './target-info.css';
+import { targetsValues } from '../../../models';
+import TargetBlockComponent from './target-block/target-block';
 
 interface Props {
-  target: TargetEnum;
+  targetName: string;
 }
 
-const TargetInfo = ({ target }: Props) => {
-  if (target === TargetEnum.telegram) {
-    return (
-      <div className="target-block">
-        <img
-          src={telegramIcon}
-          className="telegram-taget-icon"
-          alt="telegram-taget-icon"
-        />
-        telegram
-      </div>
-    );
-  } if (target === TargetEnum.email) {
-    return (
-      <div className="target-block">
-        <img
-          src={emailIcon}
-          className="email-taget-icon"
-          alt="email-taget-icon"
-        />
-        email
-      </div>
-    );
+const TargetInfoComponent = ({ targetName }: Props) => {
+  const targetValue = targetsValues.find((v) => v.name === targetName);
+  if (!targetName || !targetValue) {
+    return <></>;
   }
-  return <></>;
+
+  return (
+    <TargetBlockComponent
+      icon={targetValue.icon}
+      alt={targetValue.alt}
+      text={targetValue.text}
+    />
+  );
 };
 
-export default TargetInfo;
+export default TargetInfoComponent;

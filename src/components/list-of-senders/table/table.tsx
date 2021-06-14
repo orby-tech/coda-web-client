@@ -1,20 +1,24 @@
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
 import { SenderType } from '../../../models';
 import RowsOfListOfSenders from './body-of-table/rows-of-list-of-senders';
 import FooterRow from './footer-row/footer-row';
 import Header from './header/header';
-import './table.css';
 
 interface Props {
   rows: SenderType[];
 }
 
+const Table = styled.table`
+  margin: 0 auto;
+`;
+
 const ListOfSendersTable = ({ rows }: Props) => (
-  <table>
+  <Table>
     <Header />
     <RowsOfListOfSenders rows={rows} />
     <FooterRow />
-  </table>
+  </Table>
 );
 
 export default observer(ListOfSendersTable);

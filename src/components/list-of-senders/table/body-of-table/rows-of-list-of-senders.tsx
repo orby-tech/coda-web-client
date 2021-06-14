@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { apiUrl } from '../../../../app-config';
-import { SenderType, TargetEnum } from '../../../../models';
-import TargetInfo from '../../target-info/target-info';
+import { SenderType } from '../../../../models';
+import TargetInfoComponent from '../../target-info/target-info';
+import RowComponent from '../row/row';
 
 interface Props {
   rows: SenderType[];
@@ -13,17 +14,14 @@ const RowsOfListOfSenders = ({ rows }: Props) => {
   return (
     <tbody>
       {rows.map((row) => (
-        <tr key={`${row.id}`}>
-          <td>
-            <TargetInfo target={row.target as TargetEnum} />
-          </td>
-          <td>{row.countOfDays}</td>
-          <td>{row.subject}</td>
-          <td>{row.lastSendDate}</td>
-          <td>
-            <button type="submit" onClick={() => deleteItem(row.id)}>Delete</button>
-          </td>
-        </tr>
+        <RowComponent
+          key={`${row.id}`}
+          target={<TargetInfoComponent targetName={row.target} />}
+          countOfDays={row.countOfDays}
+          subject={row.subject}
+          lastSendDate={row.lastSendDate}
+          submit={<button type="submit" onClick={() => deleteItem(row.id)}>Delete</button>}
+        />
       ))}
     </tbody>
   );

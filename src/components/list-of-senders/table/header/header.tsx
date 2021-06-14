@@ -1,11 +1,13 @@
+import RowComponent from '../row/row';
+
 const Header = () => (
   <thead>
-    <tr>
-      <td className="target-block">Target</td>
-      <td>Count of Days</td>
-      <td>Subject</td>
-      <td>Last send date</td>
-    </tr>
+    <RowComponent
+      target="Target"
+      countOfDays="Count of Days"
+      subject="Subject"
+      lastSendDate="Last send date"
+    />
   </thead>
 );
 
