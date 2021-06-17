@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   action, makeAutoObservable, observable,
 } from 'mobx';
+import { io } from 'socket.io-client';
 import { apiUrl } from '../app-config';
 import { SenderType } from '../models';
 
@@ -11,6 +12,9 @@ class MainStore {
     constructor() {
       makeAutoObservable(this);
       this.getListOfSenders();
+
+      const socket = io(apiUrl);
+      socket.on('ListOfSendersUpdated', () => this.getListOfSenders());
     }
 
     @action bindRows = (data:any) => {
