@@ -17,13 +17,13 @@ const ListOfSenders = ({ mainStore }:Props) => {
 export default inject('mainStore')(observer(ListOfSenders));
 
 const dataComponent = (rows: SenderType[]) => (
-  <div date-testid="list-of-senders-component">
+  <div data-testid="list-of-senders-component">
     <ListOfSendersTable rows={rows} />
   </div>
 );
 
 const noDataComponent = () => (
-  <div date-testid="list-of-senders-not-found-error-component">
+  <div data-testid="list-of-senders-not-found-error-component">
     Oops. Not founded
   </div>
 );

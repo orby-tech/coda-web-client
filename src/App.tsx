@@ -15,4 +15,6 @@ const AppComponent = () => (
   </AppStyled>
 );
 
-export default inject('mainStore')(observer(AppComponent));
+const App = inject('mainStore')(observer(AppComponent));
+
+export default App;

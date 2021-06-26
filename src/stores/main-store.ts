@@ -11,6 +11,7 @@ class MainStore {
 
     constructor() {
       makeAutoObservable(this);
+
       this.getListOfSenders();
 
       const socket = io(apiUrl);
