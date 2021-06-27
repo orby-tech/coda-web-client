@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/jsx-props-no-spreading */
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
